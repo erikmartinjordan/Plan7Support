@@ -45,7 +45,7 @@
         .stickers-strip {
             position: fixed;
             bottom: 0; left: 0; right: 0;
-            height: 35vh;
+            height: 38vh;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -62,16 +62,7 @@
             top: 0;
         }
         .stickers-strip .fade {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background: linear-gradient(
-                to bottom,
-                var(--bg) 0%,
-                rgba(248,249,250,0.80) 8%,
-                rgba(248,249,250,0.30) 18%,
-                transparent 28%
-            );
+            display: none;
         }
 
         /* ── Nav ── */
@@ -347,17 +338,21 @@
         '🧄','🍗','🥕','🍄','🧀',
         '🍤','🍊','🍎','🐟','🍓',
         '🥒','🧅','🍕','🍜','🥓',
-        '🥬','🌽','🫘','🍒','🍌'
+        '🥬','🌽','🫘','🍒','🍌',
+        '🥩','🌮','🍣','🥗','🍇',
+        '🍑','🌶','🥐','🧈','🍯'
     ];
     var rots  = [-30,20,35,-15,40,-25,10,-35,25,-18,32,-40,15,-25,22];
     var waves = [
-        { n:12, ty:0,  by:28,  sy:68, bys:95  },
-        { n:10, ty:20, by:55,  sy:65, bys:88  },
-        { n:9,  ty:45, by:85,  sy:70, bys:90  },
-        { n:7,  ty:75, by:120, sy:65, bys:85  },
-        { n:6,  ty:105,by:155, sy:60, bys:82  },
-        { n:5,  ty:140,by:195, sy:58, bys:80  },
-        { n:4,  ty:180,by:230, sy:55, bys:75  }
+        { n:14, ty:0,  by:25,  sy:68, bys:95  },
+        { n:13, ty:15, by:50,  sy:65, bys:88  },
+        { n:12, ty:38, by:78,  sy:70, bys:92  },
+        { n:11, ty:62, by:105, sy:64, bys:86  },
+        { n:10, ty:88, by:135, sy:60, bys:84  },
+        { n:9,  ty:112,by:165, sy:58, bys:80  },
+        { n:8,  ty:145,by:195, sy:55, bys:78  },
+        { n:7,  ty:175,by:225, sy:52, bys:75  },
+        { n:6,  ty:205,by:255, sy:50, bys:72  }
     ];
 
     function rand(i, min, max) {
