@@ -41,35 +41,36 @@
             width: 96px; height: 96px;
         }
 
-        /* ── Stickers layer (full page, bottom → top fade) ── */
-        .stickers-layer {
+        /* ── Stickers strip (bottom third, scattered) ── */
+        .stickers-strip {
             position: fixed;
-            inset: 0;
+            bottom: 0; left: 0; right: 0;
+            height: 35vh;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
         }
-        .stickers-layer .grid {
+        .stickers-strip .scene {
             position: absolute;
-            inset: 0;
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
         }
         .sticker-cell {
             position: absolute;
             line-height: 1;
+            top: 0;
         }
-        .stickers-mask {
-            position: fixed;
+        .stickers-strip .fade {
+            position: absolute;
             inset: 0;
-            z-index: 1;
             pointer-events: none;
             background: linear-gradient(
-                to top,
-                transparent 0%,
-                rgba(248,249,250,0.15) 15%,
-                rgba(248,249,250,0.60) 25%,
-                var(--bg) 30%,
-                var(--bg) 100%
+                to bottom,
+                var(--bg) 0%,
+                rgba(248,249,250,0.80) 8%,
+                rgba(248,249,250,0.30) 18%,
+                transparent 28%
             );
         }
 
@@ -220,10 +221,10 @@
 </head>
 <body>
 
-<div class="stickers-layer">
-    <div class="grid" id="stickers"></div>
+<div class="stickers-strip">
+    <div class="scene" id="stickers"></div>
+    <div class="fade"></div>
 </div>
-<div class="stickers-mask"></div>
 
 <div class="logo">
     <img src="icon.png" alt="Plan7" width="96" height="96">
@@ -338,7 +339,7 @@
     sections.forEach(function(s) { obs.observe(s); });
 })();
 
-/* ── Sticker grid (fixed full‑page, bottom → top fade) ── */
+/* ── Scattered sticker strip (bottom third) ── */
 (function() {
     var icons = [
         '🐟','🍝','🥑','🍋','🍅',
@@ -348,37 +349,50 @@
         '🥒','🧅','🍕','🍜','🥓',
         '🥬','🌽','🫘','🍒','🍌'
     ];
-    var container = document.getElementById('stickers');
-    var cell = 52;
-    var sizes = [65,75,85,70,90,80,68,78,88,72,95,82,67,87,73];
-    var rots = [-30,20,35,-15,40,-25,10,-35,25,-18,32,-40,15,-25,22];
+    var rots  = [-30,20,35,-15,40,-25,10,-35,25,-18,32,-40,15,-25,22];
+    var waves = [
+        { n:12, ty:0,  by:28,  sy:68, bys:95  },
+        { n:10, ty:20, by:55,  sy:65, bys:88  },
+        { n:9,  ty:45, by:85,  sy:70, bys:90  },
+        { n:7,  ty:75, by:120, sy:65, bys:85  },
+        { n:6,  ty:105,by:155, sy:60, bys:82  },
+        { n:5,  ty:140,by:195, sy:58, bys:80  },
+        { n:4,  ty:180,by:230, sy:55, bys:75  }
+    ];
 
-    function render() {
-        var w = window.innerWidth;
-        var h = window.innerHeight;
-        var cols = Math.ceil(w / cell) + 1;
-        var startRow = Math.floor(h * 0.60 / cell);
-        var endRow = Math.ceil(h / cell) + 1;
-        var html = '';
-
-        for (var row = startRow; row < endRow; row++) {
-            for (var col = 0; col < cols; col++) {
-                var i = row * cols + col;
-                var idx = (i * 7 + row * 13 + col * 11) % icons.length;
-                var s = sizes[i % 15];
-                var r = rots[i % 15];
-                var x = col * cell + cell / 2 - s / 2;
-                var y = row * cell + cell / 2 - s / 2;
-                html += '<span class="sticker-cell" style="font-size:' + s + 'px;' +
-                    'left:' + x + 'px;top:' + y + 'px;' +
-                    'transform:rotate(' + r + 'deg);">' + icons[idx] + '</span>';
-            }
-        }
-        container.innerHTML = html;
+    function rand(i, min, max) {
+        var x = Math.sin(i * 127.1 + 311.7 + i * i * 0.001) * 43758.5453;
+        var v = x - Math.floor(x);
+        return min + v * (max - min);
     }
 
-    render();
-    window.addEventListener('resize', render);
+    function build() {
+        var html = '';
+        var gi = 0;
+
+        for (var wi = 0; wi < waves.length; wi++) {
+            var wave = waves[wi];
+            for (var i = 0; i < wave.n; i++, gi++) {
+                var leftPct = rand(gi * 3, 0, 100);
+                var topV     = rand(gi * 5 + 1, wave.ty, wave.by);
+                var sz       = Math.round(rand(gi * 7 + 2, wave.sy, wave.bys));
+                var iconIdx  = Math.floor(rand(gi * 11 + 3, 0, icons.length));
+                var r        = Math.round(rand(gi * 13 + 4, rots[gi % rots.length] - 5, rots[gi % rots.length] + 5));
+
+                html += '<span class="sticker-cell" style="' +
+                    'font-size:' + sz + 'px;' +
+                    'left:' + leftPct + '%;' +
+                    'top:' + topV + 'px;' +
+                    'transform:rotate(' + r + 'deg);">' +
+                    icons[iconIdx] + '</span>';
+            }
+        }
+
+        document.getElementById('stickers').innerHTML = html;
+    }
+
+    build();
+    window.addEventListener('resize', build);
 })();
 </script>
 
