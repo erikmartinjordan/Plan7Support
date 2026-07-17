@@ -26,6 +26,7 @@
             color: var(--ink);
             background: var(--bg);
             line-height: 1.6;
+            position: relative;
         }
 
         /* ── Header ── */
@@ -36,6 +37,8 @@
             max-width: 680px;
             margin: 0 auto;
             padding: 28px 24px 0;
+            position: relative;
+            z-index: 10;
         }
         .header img {
             width: 38px; height: 38px;
@@ -46,46 +49,21 @@
             font-size: 1.2rem;
             font-weight: 620;
             letter-spacing: -0.015em;
-        }
-        .header h1 span { color: var(--coral); font-weight: 680; }
-
-        /* ── Hero + sticker background ── */
-        .hero {
-            position: relative;
-            overflow: hidden;
-            min-height: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 24px 48px;
-        }
-        .hero-title {
-            font-size: 2.6rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
             color: var(--ink);
-            line-height: 1.2;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-sub {
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: var(--soft);
-            margin-top: 8px;
-            position: relative;
-            z-index: 2;
         }
 
-        /* ── Sticker grid ── */
-        .stickers {
+        /* ── Stickers layer (full page, bottom → top fade) ── */
+        .stickers-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .stickers-layer .grid {
             position: absolute;
             inset: 0;
             pointer-events: none;
-            overflow: hidden;
-            --cell: 64px;
         }
         .sticker-cell {
             position: absolute;
@@ -94,19 +72,20 @@
             line-height: 1;
         }
         .stickers-mask {
-            position: absolute;
+            position: fixed;
             inset: 0;
+            z-index: 1;
+            pointer-events: none;
             background: linear-gradient(
-                to bottom,
+                to top,
                 transparent 0%,
-                transparent 20%,
-                rgba(248,249,250,0.70) 40%,
-                rgba(248,249,250,0.40) 55%,
-                rgba(248,249,250,0.15) 70%,
-                rgba(248,249,250,0.05) 85%,
+                transparent 10%,
+                rgba(248,249,250,0.15) 30%,
+                rgba(248,249,250,0.50) 50%,
+                rgba(248,249,250,0.85) 70%,
+                var(--bg) 85%,
                 var(--bg) 100%
             );
-            pointer-events: none;
         }
 
         /* ── Nav ── */
@@ -149,6 +128,8 @@
             max-width: 680px;
             margin: 0 auto;
             padding: 0 24px 60px;
+            position: relative;
+            z-index: 10;
         }
         .card {
             background: var(--card);
@@ -156,6 +137,7 @@
             border-radius: 14px;
             padding: 34px 32px;
             margin-bottom: 24px;
+            position: relative;
         }
         .card h2 {
             font-size: 1.25rem;
@@ -239,34 +221,30 @@
             color: var(--soft);
             font-size: 0.78rem;
             letter-spacing: -0.005em;
+            position: relative;
+            z-index: 10;
         }
         footer a { color: var(--coral); text-decoration: none; }
 
         @media (max-width: 640px) {
-            .hero { min-height: 260px; padding: 32px 16px 40px; }
-            .hero-title { font-size: 1.8rem; }
-            .hero-sub { font-size: 0.92rem; }
             .container { padding: 0 16px 48px; }
             .card { padding: 26px 20px; border-radius: 12px; }
             nav a { padding: 8px 14px; font-size: 0.81rem; }
-            .stickers { --cell: 50px; }
             .sticker-cell { font-size: 32px; }
         }
     </style>
 </head>
 <body>
 
+<div class="stickers-layer">
+    <div class="grid" id="stickers"></div>
+</div>
+<div class="stickers-mask"></div>
+
 <div class="header">
     <img src="icon.png" alt="Plan7" width="38" height="38">
-    <h1>Plan<span>7</span></h1>
+    <h1>Plan7</h1>
 </div>
-
-<section class="hero">
-    <div class="stickers" id="stickers"></div>
-    <div class="stickers-mask"></div>
-    <h2 class="hero-title">Plan7 Premium</h2>
-    <p class="hero-sub">Unlock the full experience</p>
-</section>
 
 <nav>
     <div class="tabs">
@@ -377,7 +355,7 @@
     sections.forEach(function(s) { obs.observe(s); });
 })();
 
-/* ── Sticker grid ── */
+/* ── Sticker grid (fixed full‑page, bottom → top fade) ── */
 (function() {
     var icons = [
         '🐟','🍝','🥑','🍋','🍅',
@@ -389,8 +367,10 @@
     ];
     var container = document.getElementById('stickers');
     var cell = 64;
-    var cols = Math.ceil(container.offsetWidth / cell) + 1;
-    var rows = Math.ceil(container.offsetHeight / cell) + 1;
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var cols = Math.ceil(w / cell) + 1;
+    var rows = Math.ceil(h / cell) + 1;
     var count = cols * rows;
     var html = '';
     var sizes = [65,75,85,70,90,80,68,78,88,72,95,82,67,87,73];
@@ -409,6 +389,28 @@
             'transform:rotate(' + r + 'deg);">' + icons[idx] + '</span>';
     }
     container.innerHTML = html;
+
+    window.addEventListener('resize', function() {
+        var w2 = window.innerWidth;
+        var h2 = window.innerHeight;
+        var c2 = Math.ceil(w2 / cell) + 1;
+        var r2 = Math.ceil(h2 / cell) + 1;
+        var cnt2 = c2 * r2;
+        var h2html = '';
+        for (var j = 0; j < cnt2; j++) {
+            var cc = j % c2;
+            var rr = Math.floor(j / c2);
+            var ix = (j * 7 + rr * 13 + cc * 11) % icons.length;
+            var ss = sizes[j % 15] / 65 * 42;
+            var rt = rots[j % 15];
+            var xx = cc * cell + cell / 2 - ss / 2;
+            var yy = rr * cell + cell / 2 - ss / 2;
+            h2html += '<span class="sticker-cell" style="font-size:' + ss + 'px;' +
+                'left:' + xx + 'px;top:' + yy + 'px;' +
+                'transform:rotate(' + rt + 'deg);">' + icons[ix] + '</span>';
+        }
+        container.innerHTML = h2html;
+    });
 })();
 </script>
 
