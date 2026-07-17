@@ -4,152 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan7 — Support & Privacy</title>
+    <link rel="icon" href="icon.png">
     <meta name="theme-color" content="#1561EB" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#1C1E22" media="(prefers-color-scheme: dark)">
     <style>
         :root {
             --accent: #1561EB;
-            --accent-soft: rgba(21, 97, 235, 0.12);
             --ink: #1A1C1F;
             --text: #52575C;
             --soft: #94999E;
-            --card: rgba(255, 255, 255, 0.84);
-            --card-border: rgba(224, 227, 230, 0.78);
-            --bg: #F3F4F6;
-            --bg-top: #EDF2FA;
-            --shadow: 0 1px 2px rgba(26, 28, 31, 0.04), 0 4px 14px rgba(26, 28, 31, 0.045);
-            --glass-bg: rgba(255, 255, 255, 0.72);
-            --glass-border: rgba(255, 255, 255, 0.60);
-            --glass-blur: blur(22px) saturate(1.4);
-            --radius-lg: 22px;
-            --radius-md: 16px;
-            --radius-sm: 12px;
+            --card-bg: #fff;
+            --card-border: #E8EBEE;
+            --bg: #F7F7F9;
             --font: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
         }
         @media (prefers-color-scheme: dark) {
             :root {
                 --accent: #4D99FF;
-                --accent-soft: rgba(77, 153, 255, 0.14);
                 --ink: #E6E8EB;
                 --text: #B3B8BD;
                 --soft: #80858A;
-                --card: rgba(44, 46, 51, 0.70);
-                --card-border: rgba(77, 79, 82, 0.78);
-                --bg: #121317;
-                --bg-top: #15171C;
-                --shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 4px 14px rgba(0, 0, 0, 0.18);
-                --glass-bg: rgba(28, 30, 34, 0.70);
-                --glass-border: rgba(255, 255, 255, 0.08);
-                --glass-blur: blur(22px) saturate(1.2);
+                --card-bg: #1C1E22;
+                --card-border: #2C2E33;
+                --bg: #111317;
             }
         }
 
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html {
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
         body {
             font-family: var(--font);
             color: var(--ink);
             background: var(--bg);
-            line-height: 1.6;
-            transition: background 0.4s ease, color 0.4s ease;
-            overflow-x: hidden;
+            line-height: 1.65;
+            transition: background 0.3s ease, color 0.3s ease;
+            font-size: 15px;
         }
 
-        /* ── Ambient gradient background ── */
-        .ambient {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .ambient::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            left: -20%;
-            width: 80%;
-            height: 90%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(21, 97, 235, 0.06) 0%, transparent 60%);
-            opacity: 1;
-        }
-        .ambient::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            right: -10%;
-            width: 70%;
-            height: 70%;
-            background: radial-gradient(ellipse at 70% 80%, rgba(21, 97, 235, 0.04) 0%, transparent 55%);
-            opacity: 1;
-        }
-        @media (prefers-color-scheme: dark) {
-            .ambient::before {
-                background: radial-gradient(ellipse at 30% 20%, rgba(77, 153, 255, 0.06) 0%, transparent 60%);
-            }
-            .ambient::after {
-                background: radial-gradient(ellipse at 70% 80%, rgba(77, 153, 255, 0.04) 0%, transparent 55%);
-            }
-        }
-
-        /* ── Hero ── */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 24px 64px;
-            text-align: center;
-            position: relative;
-        }
-        .hero-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--accent);
-            border-radius: 17px;
+        /* ── Header ── */
+        header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 28px rgba(21, 97, 235, 0.28);
-            transition: box-shadow 0.4s ease, background 0.4s ease;
-            position: relative;
+            gap: 14px;
+            padding: 32px 24px 20px;
+            max-width: 680px;
+            margin: 0 auto;
         }
-        .hero-icon svg {
-            width: 28px;
-            height: 28px;
-            color: white;
+        header img {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            flex-shrink: 0;
         }
-        .hero h1 {
-            font-size: 3.4rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
+        header h1 {
+            font-size: 1.35rem;
+            font-weight: 620;
+            letter-spacing: -0.015em;
             color: var(--ink);
-            transition: color 0.4s ease;
-            line-height: 1.15;
         }
-        .hero h1 span {
+        header h1 span {
             color: var(--accent);
-            transition: color 0.4s ease;
-        }
-        .hero .subtitle {
-            font-size: 1.15rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-top: 10px;
-            letter-spacing: -0.01em;
-            transition: color 0.4s ease;
+            font-weight: 680;
         }
 
-        /* ── Navigation pills ── */
-        .nav-bar {
+        /* ── Nav tabs ── */
+        nav {
             position: sticky;
             top: 16px;
             z-index: 100;
@@ -157,34 +76,29 @@
             justify-content: center;
             padding: 0 20px;
             margin-bottom: 32px;
-            transition: transform 0.3s ease;
         }
-        .nav-pill {
+        nav .tabs {
             display: inline-flex;
-            gap: 2px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            padding: 5px;
-            box-shadow: var(--shadow);
-            transition: all 0.4s ease;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 13px;
+            padding: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
-        .nav-pill a {
+        nav a {
             display: inline-block;
-            padding: 10px 22px;
-            border-radius: 24px;
-            font-size: 0.9rem;
-            font-weight: 590;
+            padding: 9px 20px;
+            border-radius: 10px;
+            font-size: 0.86rem;
+            font-weight: 560;
             text-decoration: none;
             color: var(--text);
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             letter-spacing: -0.01em;
             white-space: nowrap;
         }
-        .nav-pill a:hover,
-        .nav-pill a.active {
+        nav a.active {
             background: var(--accent);
             color: #fff;
         }
@@ -196,122 +110,84 @@
             padding: 0 24px 60px;
         }
 
-        /* ── Glass Card ── */
-        .glass-card {
-            background: var(--card);
+        /* ── Card ── */
+        .card {
+            background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: var(--radius-lg);
-            padding: 38px 36px;
-            margin-bottom: 28px;
-            box-shadow: var(--shadow);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            transition: all 0.4s ease, transform 0.25s ease;
+            border-radius: 14px;
+            padding: 34px 32px;
+            margin-bottom: 24px;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
-        .glass-card:hover {
-            transform: translateY(-1px);
-        }
-        .glass-card h2 {
-            font-size: 1.55rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--ink);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: color 0.4s ease;
-        }
-        .glass-card h2 .accent-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent);
-            flex-shrink: 0;
-            transition: background 0.4s ease;
-        }
-        .glass-card p {
-            color: var(--text);
-            margin-bottom: 14px;
-            font-size: 0.975rem;
-            letter-spacing: -0.01em;
-            transition: color 0.4s ease;
-        }
-        .glass-card p.updated {
-            font-size: 0.84rem;
-            color: var(--soft);
-            font-weight: 500;
-            margin-bottom: 22px;
-            transition: color 0.4s ease;
-        }
-        .glass-card h3 {
-            font-size: 1.06rem;
-            font-weight: 650;
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 640;
             letter-spacing: -0.015em;
             color: var(--ink);
-            margin: 22px 0 8px;
-            transition: color 0.4s ease;
+            margin-bottom: 14px;
         }
-        .glass-card ul {
+        .card p {
+            color: var(--text);
+            margin-bottom: 12px;
+            font-size: 0.92rem;
+            letter-spacing: -0.008em;
+        }
+        .card p.updated {
+            font-size: 0.8rem;
+            color: var(--soft);
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 620;
+            letter-spacing: -0.012em;
+            color: var(--ink);
+            margin: 22px 0 8px;
+        }
+        .card ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        .glass-card ul li {
+        .card ul li {
             position: relative;
-            padding-left: 22px;
+            padding-left: 18px;
             color: var(--text);
-            margin-bottom: 10px;
-            font-size: 0.96rem;
-            letter-spacing: -0.01em;
-            transition: color 0.4s ease;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            letter-spacing: -0.008em;
             line-height: 1.6;
         }
-        .glass-card ul li::before {
-            content: '';
+        .card ul li::before {
+            content: '—';
             position: absolute;
             left: 0;
-            top: 0.58em;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
-            opacity: 0.55;
-            transition: background 0.4s ease;
+            top: 0;
+            color: var(--accent);
+            opacity: 0.5;
+            font-weight: 500;
         }
-        .glass-card strong {
-            font-weight: 590;
-            color: var(--ink);
-            transition: color 0.4s ease;
-        }
-        .glass-card a {
+        .card strong { font-weight: 600; color: var(--ink); }
+        .card a {
             color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.4s ease, opacity 0.2s ease;
+            font-weight: 530;
         }
-        .glass-card a:hover {
-            opacity: 0.78;
-        }
+        .card a:hover { text-decoration: underline; }
 
-        /* ── FAQ item ── */
-        .faq-item {
-            margin-bottom: 18px;
-        }
-        .faq-item .q {
-            font-weight: 650;
-            font-size: 0.98rem;
+        /* ── FAQ ── */
+        .faq { margin-bottom: 16px; }
+        .faq .q {
+            font-weight: 620;
+            font-size: 0.92rem;
             color: var(--ink);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             letter-spacing: -0.01em;
-            transition: color 0.4s ease;
         }
-        .faq-item .a {
+        .faq .a {
             color: var(--text);
-            font-size: 0.94rem;
-            letter-spacing: -0.01em;
-            transition: color 0.4s ease;
+            font-size: 0.89rem;
+            letter-spacing: -0.008em;
             line-height: 1.6;
         }
 
@@ -319,177 +195,152 @@
             border: none;
             height: 1px;
             background: var(--card-border);
-            margin: 26px 0;
-            transition: background 0.4s ease;
+            margin: 24px 0;
+            transition: background 0.3s ease;
         }
 
         /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 12px 20px 40px;
+            padding: 8px 20px 44px;
             color: var(--soft);
-            font-size: 0.82rem;
-            font-weight: 500;
+            font-size: 0.78rem;
             letter-spacing: -0.005em;
-            transition: color 0.4s ease;
         }
 
-        /* ── Responsive ── */
         @media (max-width: 640px) {
-            .hero {
-                padding: 56px 18px 44px;
-            }
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            .hero-icon {
-                width: 46px;
-                height: 46px;
-                border-radius: 14px;
-            }
-            .hero-icon svg {
-                width: 23px;
-                height: 23px;
-            }
-            .container {
-                padding: 0 14px 48px;
-            }
-            .glass-card {
-                padding: 28px 22px;
-                border-radius: var(--radius-md);
-            }
-            .glass-card h2 {
-                font-size: 1.3rem;
-            }
-            .nav-pill a {
-                padding: 8px 16px;
-                font-size: 0.82rem;
-            }
+            header { padding: 24px 16px 14px; }
+            .container { padding: 0 16px 48px; }
+            .card { padding: 26px 20px; border-radius: 12px; }
+            nav a { padding: 8px 14px; font-size: 0.81rem; }
         }
-
-        /* ── Animation ── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .glass-card {
-            animation: fadeUp 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-        }
-        .glass-card:nth-child(2) { animation-delay: 0.08s; }
-        .glass-card:nth-child(3) { animation-delay: 0.16s; }
-        .hero { animation: fadeUp 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
-        .nav-bar { animation: fadeUp 0.55s 0.06s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
     </style>
 </head>
 <body>
 
-<div class="ambient"></div>
-
-<header class="hero">
-    <div class="hero-icon">
-        <!-- sparkles icon -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3L14 10L21 12L14 14L12 21L10 14L3 12L10 10Z"/>
-            <path d="M5.5 3.5L5.5 5.5M4 4.5L7 4.5" opacity="0.6"/>
-            <path d="M19.5 18.5L19.5 20.5M18 19.5L21 19.5" opacity="0.6"/>
-        </svg>
-    </div>
+<header>
+    <img src="icon.png" alt="Plan7" width="44" height="44">
     <h1>Plan<span>7</span></h1>
-    <p class="subtitle">Meal planning made simple</p>
 </header>
 
-<nav class="nav-bar">
-    <div class="nav-pill">
-        <a href="#support" class="active">Support</a>
-        <a href="#privacy">Privacy Policy</a>
+<nav>
+    <div class="tabs">
+        <a href="#support" class="active" data-tab="support">Support</a>
+        <a href="#privacy" data-tab="privacy">Privacy</a>
     </div>
 </nav>
 
 <main class="container">
 
-    <section class="glass-card" id="support">
-        <h2><span class="accent-dot"></span> Support</h2>
-        <p>Everything you need to know about managing your subscription and getting the most out of Plan7.</p>
+    <section class="card" id="support">
+        <h2>Support</h2>
+        <p>Managing your subscription and getting the most out of Plan7.</p>
 
-        <h3>Frequently Asked Questions</h3>
+        <h3>FAQ</h3>
 
-        <div class="faq-item">
+        <div class="faq">
             <p class="q">How do I subscribe?</p>
-            <p class="a">Open Plan7, navigate to the sharing screen, and tap the upgrade button. Choose between <strong>Monthly</strong> and <strong>Yearly</strong> plans, then confirm your purchase through the App Store.</p>
+            <p class="a">Open Plan7, go to sharing, and tap upgrade. Choose <strong>Monthly</strong> or <strong>Yearly</strong>, then confirm via the App Store.</p>
         </div>
 
-        <div class="faq-item">
-            <p class="q">How do I cancel my subscription?</p>
-            <p class="a">Open <strong>Settings</strong> on your iPhone, tap your name, then <strong>Subscriptions</strong>. Select Plan7 and choose <strong>Cancel Subscription</strong>.</p>
+        <div class="faq">
+            <p class="q">How do I cancel?</p>
+            <p class="a"><strong>Settings</strong> → your name → <strong>Subscriptions</strong> → Plan7 → <strong>Cancel</strong>.</p>
         </div>
 
-        <div class="faq-item">
-            <p class="q">I cancelled but still have access</p>
-            <p class="a">Your subscription stays active until the current billing period ends. After that, premium features will be locked.</p>
+        <div class="faq">
+            <p class="q">I cancelled. Why do I still have access?</p>
+            <p class="a">Your subscription stays active until the current billing period ends. Premium features lock after that.</p>
         </div>
 
-        <div class="faq-item">
-            <p class="q">How do I restore a previous purchase?</p>
-            <p class="a">Open Plan7, go to the upgrade screen, and tap <strong>Restore Purchases</strong>. Your subscription will be restored automatically.</p>
+        <div class="faq">
+            <p class="q">How do I restore my purchase?</p>
+            <p class="a">Open the upgrade screen in Plan7 and tap <strong>Restore Purchases</strong>.</p>
         </div>
 
-        <div class="faq-item">
-            <p class="q">Can I share my subscription with family?</p>
-            <p class="a">Family Sharing is not supported at this time. Each user needs their own subscription.</p>
+        <div class="faq">
+            <p class="q">Family Sharing?</p>
+            <p class="a">Not yet supported. Each member needs their own subscription.</p>
         </div>
 
         <hr>
 
-        <h3>Contact</h3>
-        <p>Need more help? We're here for you.<br>
-        <a href="mailto:support@plan7.app">support@plan7.app</a> — we aim to respond within 24 hours on business days.</p>
+        <h3>Get in touch</h3>
+        <p><a href="mailto:support@plan7.app">support@plan7.app</a><br>
+        <span style="color:var(--soft);font-size:0.84rem;">We reply within 24 hours on business days.</span></p>
     </section>
 
-    <section class="glass-card" id="privacy">
-        <h2><span class="accent-dot"></span> Privacy Policy</h2>
-        <p class="updated">Last updated: July 17, 2026</p>
+    <section class="card" id="privacy">
+        <h2>Privacy Policy</h2>
+        <p class="updated">July 17, 2026</p>
 
-        <h3>1. Information We Collect</h3>
-        <p>Plan7 collects minimal data to provide and improve our service:</p>
+        <h3>1. What we collect</h3>
         <ul>
-            <li><strong>Account data:</strong> When you create shared plans, we store a unique identifier so the app can sync data between your devices and with other participants.</li>
-            <li><strong>Usage data:</strong> Anonymous analytics about how you use the app (features used, screens visited) to help us improve the experience. This does not personally identify you.</li>
-            <li><strong>Purchase data:</strong> We do not collect or store payment information. All purchases are securely processed by Apple via StoreKit. We only receive a boolean indicating whether you have an active subscription.</li>
+            <li><strong>Account data</strong> — a unique ID so shared plans sync between your devices and other participants.</li>
+            <li><strong>Anonymous usage</strong> — which features you use, so we know what to improve. Not tied to your identity.</li>
+            <li><strong>Subscription status</strong> — a simple yes/no flag. We never see your payment details — Apple handles all of that.</li>
         </ul>
 
-        <h3>2. How We Use Your Information</h3>
+        <h3>2. How we use it</h3>
         <ul>
-            <li>To provide and maintain the app's core functionality (meal plans, shared spaces).</li>
-            <li>To sync data across your devices via iCloud when enabled.</li>
-            <li>To unlock premium features for paying subscribers.</li>
-            <li>To improve the app through anonymous analytics.</li>
+            <li>To make the app work (meal plans, shared spaces, syncing).</li>
+            <li>To sync across your devices via iCloud when you enable it.</li>
+            <li>To unlock premium features if you're paying.</li>
+            <li>To figure out what to build next, based on anonymous usage patterns.</li>
         </ul>
 
-        <h3>3. Data Storage & Security</h3>
-        <p>Your data is stored locally on your device and optionally in your private iCloud container. We do not operate our own servers. We implement industry-standard measures to protect your data.</p>
+        <h3>3. Where your data lives</h3>
+        <p>On your device, and optionally in your private iCloud container. We don't run servers that hold your data.</p>
 
-        <h3>4. Third-Party Services</h3>
-        <p>Plan7 does not use any third-party analytics, advertising, or tracking SDKs. All purchases go through Apple's StoreKit system — we never have access to your payment details.</p>
+        <h3>4. Third parties</h3>
+        <p>None. No analytics SDKs, no ad networks, no trackers. Purchases go through Apple's StoreKit — we never touch your payment info.</p>
 
-        <h3>5. Data Retention & Deletion</h3>
-        <p>Data is retained only as long as necessary. You can delete the app to remove local data. Shared plan data is deleted when all participants leave. To request deletion of server-side logs, contact us.</p>
+        <h3>5. Data retention</h3>
+        <p>Delete the app, your local data is gone. Shared plans disappear when everyone leaves. For anything on our side, just ask.</p>
 
-        <h3>6. Children's Privacy</h3>
-        <p>Plan7 is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+        <h3>6. Kids</h3>
+        <p>Plan7 isn't aimed at children under 13, and we don't knowingly collect their data.</p>
 
-        <h3>7. Changes to This Policy</h3>
-        <p>We may update this policy. Changes will be posted here with an updated date. Continued use of the app means you accept the updated policy.</p>
+        <h3>7. Changes</h3>
+        <p>If this policy changes, we'll post the update here. Using the app after that means you're cool with it.</p>
 
         <h3>8. Contact</h3>
-        <p>For questions about this policy or your data, contact us at:<br>
-        <a href="mailto:support@plan7.app">support@plan7.app</a></p>
+        <p><a href="mailto:support@plan7.app">support@plan7.app</a></p>
     </section>
 
 </main>
 
 <footer>
-    &copy; 2026 Plan7. All rights reserved.
+    Plan7 &copy; 2026
 </footer>
+
+<script>
+(function() {
+    const tabs = document.querySelectorAll('nav a');
+
+    function setActive(id) {
+        tabs.forEach(a => a.classList.remove('active'));
+        const target = document.querySelector(`[data-tab="${id}"]`);
+        if (target) target.classList.add('active');
+    }
+
+    tabs.forEach(a => {
+        a.addEventListener('click', function() {
+            setActive(this.dataset.tab);
+        });
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    const opts = { threshold: 0.35 };
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) setActive(e.target.id);
+        });
+    }, opts);
+
+    sections.forEach(s => observer.observe(s));
+})();
+</script>
 
 </body>
 </html>
