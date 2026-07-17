@@ -29,27 +29,17 @@
             position: relative;
         }
 
-        /* ── Header ── */
-        .header {
+        /* ── Logo ── */
+        .logo {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 28px 24px 0;
+            justify-content: center;
+            padding: 36px 24px 0;
             position: relative;
             z-index: 10;
         }
-        .header img {
-            width: 38px; height: 38px;
-            border-radius: 10px;
-            flex-shrink: 0;
-        }
-        .header h1 {
-            font-size: 1.2rem;
-            font-weight: 620;
-            letter-spacing: -0.015em;
-            color: var(--ink);
+        .logo img {
+            width: 64px; height: 64px;
+            border-radius: 17px;
         }
 
         /* ── Stickers layer (full page, bottom → top fade) ── */
@@ -67,7 +57,6 @@
         }
         .sticker-cell {
             position: absolute;
-            font-size: 42px;
             opacity: 0.50;
             line-height: 1;
         }
@@ -79,11 +68,11 @@
             background: linear-gradient(
                 to top,
                 transparent 0%,
-                transparent 10%,
-                rgba(248,249,250,0.15) 30%,
-                rgba(248,249,250,0.50) 50%,
-                rgba(248,249,250,0.85) 70%,
-                var(--bg) 85%,
+                transparent 5%,
+                rgba(248,249,250,0.10) 30%,
+                rgba(248,249,250,0.45) 45%,
+                rgba(248,249,250,0.85) 55%,
+                var(--bg) 60%,
                 var(--bg) 100%
             );
         }
@@ -230,7 +219,6 @@
             .container { padding: 0 16px 48px; }
             .card { padding: 26px 20px; border-radius: 12px; }
             nav a { padding: 8px 14px; font-size: 0.81rem; }
-            .sticker-cell { font-size: 32px; }
         }
     </style>
 </head>
@@ -241,9 +229,8 @@
 </div>
 <div class="stickers-mask"></div>
 
-<div class="header">
-    <img src="icon.png" alt="Plan7" width="38" height="38">
-    <h1>Plan7</h1>
+<div class="logo">
+    <img src="icon.png" alt="Plan7" width="64" height="64">
 </div>
 
 <nav>
@@ -366,51 +353,37 @@
         '🥬','🌽','🫘','🍒','🍌'
     ];
     var container = document.getElementById('stickers');
-    var cell = 64;
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    var cols = Math.ceil(w / cell) + 1;
-    var rows = Math.ceil(h / cell) + 1;
-    var count = cols * rows;
-    var html = '';
+    var cell = 40;
     var sizes = [65,75,85,70,90,80,68,78,88,72,95,82,67,87,73];
     var rots = [-30,20,35,-15,40,-25,10,-35,25,-18,32,-40,15,-25,22];
+    var extraSizes = [80,100,92,78,108,88,72,95,82,110,75,98,85,68,102];
 
-    for (var i = 0; i < count; i++) {
-        var col = i % cols;
-        var row = Math.floor(i / cols);
-        var idx = (i * 7 + row * 13 + col * 11) % icons.length;
-        var s = sizes[i % 15] / 65 * 42;
-        var r = rots[i % 15];
-        var x = col * cell + cell / 2 - s / 2;
-        var y = row * cell + cell / 2 - s / 2;
-        html += '<span class="sticker-cell" style="font-size:' + s + 'px;' +
-            'left:' + x + 'px;top:' + y + 'px;' +
-            'transform:rotate(' + r + 'deg);">' + icons[idx] + '</span>';
-    }
-    container.innerHTML = html;
+    function render() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        var cols = Math.ceil(w / cell) + 2;
+        var rows = Math.ceil(h / cell) + 2;
+        var count = cols * rows;
+        var html = '';
 
-    window.addEventListener('resize', function() {
-        var w2 = window.innerWidth;
-        var h2 = window.innerHeight;
-        var c2 = Math.ceil(w2 / cell) + 1;
-        var r2 = Math.ceil(h2 / cell) + 1;
-        var cnt2 = c2 * r2;
-        var h2html = '';
-        for (var j = 0; j < cnt2; j++) {
-            var cc = j % c2;
-            var rr = Math.floor(j / c2);
-            var ix = (j * 7 + rr * 13 + cc * 11) % icons.length;
-            var ss = sizes[j % 15] / 65 * 42;
-            var rt = rots[j % 15];
-            var xx = cc * cell + cell / 2 - ss / 2;
-            var yy = rr * cell + cell / 2 - ss / 2;
-            h2html += '<span class="sticker-cell" style="font-size:' + ss + 'px;' +
-                'left:' + xx + 'px;top:' + yy + 'px;' +
-                'transform:rotate(' + rt + 'deg);">' + icons[ix] + '</span>';
+        for (var i = 0; i < count; i++) {
+            var col = i % cols;
+            var row = Math.floor(i / cols);
+            var idx = (i * 7 + row * 13 + col * 11) % icons.length;
+            var base = sizes[i % 15];
+            var s = i % 2 === 0 ? base : extraSizes[i % 15];
+            var r = rots[i % 15];
+            var x = col * cell - s / 3;
+            var y = row * cell - s / 3;
+            html += '<span class="sticker-cell" style="font-size:' + s + 'px;' +
+                'left:' + x + 'px;top:' + y + 'px;' +
+                'transform:rotate(' + r + 'deg);">' + icons[idx] + '</span>';
         }
-        container.innerHTML = h2html;
-    });
+        container.innerHTML = html;
+    }
+
+    render();
+    window.addEventListener('resize', render);
 })();
 </script>
 
