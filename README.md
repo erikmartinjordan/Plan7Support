@@ -10,22 +10,6 @@
   Syncs via iCloud. No accounts, no ads, no noise.
 </p>
 
----
-
-### Pages
-
-| Section | Path |
-|---------|------|
-| Support | `/#support` |
-| Privacy Policy | `/#privacy` |
-
-### App Store Connect URLs
-
-| Field | URL |
-|-------|-----|
-| Privacy Policy | `https://erikmartinjordan.github.io/Plan7Support/#privacy` |
-| Support URL | `https://erikmartinjordan.github.io/Plan7Support/#support` |
-
-### Tech
-
-Static HTML deployed via GitHub Pages. Push to `main` → live in seconds.
+<p align="center">
+  <a href="https://x.com/ErikMarJor">@ErikMarJor</a>
+</p>
