@@ -5,69 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan7 — Support & Privacy</title>
     <link rel="icon" href="icon.png">
-    <meta name="theme-color" content="#1561EB" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#1C1E22" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1561EB">
     <style>
         :root {
-            --accent: #1561EB;
+            --coral: #1461EB;
             --ink: #1A1C1F;
             --text: #52575C;
             --soft: #94999E;
-            --card-bg: #fff;
-            --card-border: #E8EBEE;
-            --bg: #F7F7F9;
+            --line: #E0E3E6;
+            --card: #FFFFFF;
+            --bg: #F8F9FA;
             --font: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --accent: #4D99FF;
-                --ink: #E6E8EB;
-                --text: #B3B8BD;
-                --soft: #80858A;
-                --card-bg: #1C1E22;
-                --card-border: #2C2E33;
-                --bg: #111317;
-            }
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
         body {
             font-family: var(--font);
+            font-size: 15px;
             color: var(--ink);
             background: var(--bg);
-            line-height: 1.65;
-            transition: background 0.3s ease, color 0.3s ease;
-            font-size: 15px;
+            line-height: 1.6;
         }
 
         /* ── Header ── */
-        header {
+        .header {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 32px 24px 20px;
+            gap: 12px;
             max-width: 680px;
             margin: 0 auto;
+            padding: 28px 24px 0;
         }
-        header img {
-            width: 44px;
-            height: 44px;
-            border-radius: 11px;
+        .header img {
+            width: 38px; height: 38px;
+            border-radius: 10px;
             flex-shrink: 0;
         }
-        header h1 {
-            font-size: 1.35rem;
+        .header h1 {
+            font-size: 1.2rem;
             font-weight: 620;
             letter-spacing: -0.015em;
-            color: var(--ink);
         }
-        header h1 span {
-            color: var(--accent);
-            font-weight: 680;
+        .header h1 span { color: var(--coral); font-weight: 680; }
+
+        /* ── Hero + sticker background ── */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 24px 48px;
+        }
+        .hero-title {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+            line-height: 1.2;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-sub {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--soft);
+            margin-top: 8px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* ── Nav tabs ── */
+        /* ── Sticker grid ── */
+        .stickers {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            --cell: 64px;
+        }
+        .sticker-cell {
+            position: absolute;
+            font-size: 42px;
+            opacity: 0.50;
+            line-height: 1;
+        }
+        .stickers-mask {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 20%,
+                rgba(248,249,250,0.70) 40%,
+                rgba(248,249,250,0.40) 55%,
+                rgba(248,249,250,0.15) 70%,
+                rgba(248,249,250,0.05) 85%,
+                var(--bg) 100%
+            );
+            pointer-events: none;
+        }
+
+        /* ── Nav ── */
         nav {
             position: sticky;
             top: 16px;
@@ -79,12 +121,11 @@
         }
         nav .tabs {
             display: inline-flex;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--card);
+            border: 1px solid var(--line);
             border-radius: 13px;
             padding: 4px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-            transition: background 0.3s ease, border-color 0.3s ease;
         }
         nav a {
             display: inline-block;
@@ -99,25 +140,22 @@
             white-space: nowrap;
         }
         nav a.active {
-            background: var(--accent);
+            background: var(--coral);
             color: #fff;
         }
 
-        /* ── Container ── */
+        /* ── Content ── */
         .container {
             max-width: 680px;
             margin: 0 auto;
             padding: 0 24px 60px;
         }
-
-        /* ── Card ── */
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--card);
+            border: 1px solid var(--line);
             border-radius: 14px;
             padding: 34px 32px;
             margin-bottom: 24px;
-            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .card h2 {
             font-size: 1.25rem;
@@ -147,7 +185,6 @@
         .card ul {
             list-style: none;
             padding: 0;
-            margin: 0;
         }
         .card ul li {
             position: relative;
@@ -161,21 +198,19 @@
         .card ul li::before {
             content: '—';
             position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--accent);
+            left: 0; top: 0;
+            color: var(--coral);
             opacity: 0.5;
             font-weight: 500;
         }
         .card strong { font-weight: 600; color: var(--ink); }
         .card a {
-            color: var(--accent);
+            color: var(--coral);
             text-decoration: none;
             font-weight: 530;
         }
         .card a:hover { text-decoration: underline; }
 
-        /* ── FAQ ── */
         .faq { margin-bottom: 16px; }
         .faq .q {
             font-weight: 620;
@@ -194,12 +229,10 @@
         hr {
             border: none;
             height: 1px;
-            background: var(--card-border);
+            background: var(--line);
             margin: 24px 0;
-            transition: background 0.3s ease;
         }
 
-        /* ── Footer ── */
         footer {
             text-align: center;
             padding: 8px 20px 44px;
@@ -207,21 +240,33 @@
             font-size: 0.78rem;
             letter-spacing: -0.005em;
         }
+        footer a { color: var(--coral); text-decoration: none; }
 
         @media (max-width: 640px) {
-            header { padding: 24px 16px 14px; }
+            .hero { min-height: 260px; padding: 32px 16px 40px; }
+            .hero-title { font-size: 1.8rem; }
+            .hero-sub { font-size: 0.92rem; }
             .container { padding: 0 16px 48px; }
             .card { padding: 26px 20px; border-radius: 12px; }
             nav a { padding: 8px 14px; font-size: 0.81rem; }
+            .stickers { --cell: 50px; }
+            .sticker-cell { font-size: 32px; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="icon.png" alt="Plan7" width="44" height="44">
+<div class="header">
+    <img src="icon.png" alt="Plan7" width="38" height="38">
     <h1>Plan<span>7</span></h1>
-</header>
+</div>
+
+<section class="hero">
+    <div class="stickers" id="stickers"></div>
+    <div class="stickers-mask"></div>
+    <h2 class="hero-title">Plan7 Premium</h2>
+    <p class="hero-sub">Unlock the full experience</p>
+</section>
 
 <nav>
     <div class="tabs">
@@ -266,8 +311,7 @@
         <hr>
 
         <h3>Get in touch</h3>
-        <p><a href="mailto:support@plan7.app">support@plan7.app</a><br>
-        <span style="color:var(--soft);font-size:0.84rem;">We reply within 24 hours on business days.</span></p>
+        <p><a href="https://x.com/ErikMarJor" target="_blank" rel="noopener">@ErikMarJor</a></p>
     </section>
 
     <section class="card" id="privacy">
@@ -305,40 +349,66 @@
         <p>If this policy changes, we'll post the update here. Using the app after that means you're cool with it.</p>
 
         <h3>8. Contact</h3>
-        <p><a href="mailto:support@plan7.app">support@plan7.app</a></p>
+        <p><a href="https://x.com/ErikMarJor" target="_blank" rel="noopener">@ErikMarJor</a></p>
     </section>
 
 </main>
 
 <footer>
-    Plan7 &copy; 2026
+    Plan7 &copy; 2026 &middot; <a href="https://x.com/ErikMarJor">@ErikMarJor</a>
 </footer>
 
 <script>
+/* ── Nav tabs ── */
 (function() {
-    const tabs = document.querySelectorAll('nav a');
-
+    var tabs = document.querySelectorAll('nav a');
     function setActive(id) {
-        tabs.forEach(a => a.classList.remove('active'));
-        const target = document.querySelector(`[data-tab="${id}"]`);
-        if (target) target.classList.add('active');
+        tabs.forEach(function(a) { a.classList.remove('active'); });
+        var t = document.querySelector('[data-tab="' + id + '"]');
+        if (t) t.classList.add('active');
     }
-
-    tabs.forEach(a => {
-        a.addEventListener('click', function() {
-            setActive(this.dataset.tab);
-        });
+    tabs.forEach(function(a) {
+        a.addEventListener('click', function() { setActive(this.dataset.tab); });
     });
+    var sections = document.querySelectorAll('section[id]');
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) setActive(e.target.id); });
+    }, { threshold: 0.35 });
+    sections.forEach(function(s) { obs.observe(s); });
+})();
 
-    const sections = document.querySelectorAll('section[id]');
-    const opts = { threshold: 0.35 };
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) setActive(e.target.id);
-        });
-    }, opts);
+/* ── Sticker grid ── */
+(function() {
+    var icons = [
+        '🐟','🍝','🥑','🍋','🍅',
+        '🥦','🥚','🍞','🍚','🫒',
+        '🧄','🍗','🥕','🍄','🧀',
+        '🍤','🍊','🍎','🐟','🍓',
+        '🥒','🧅','🍕','🍜','🥓',
+        '🥬','🌽','🫘','🍒','🍌'
+    ];
+    var container = document.getElementById('stickers');
+    var cell = 64;
+    var cols = Math.ceil(container.offsetWidth / cell) + 1;
+    var rows = Math.ceil(container.offsetHeight / cell) + 1;
+    var count = cols * rows;
+    var html = '';
+    var sizes = [65,75,85,70,90,80,68,78,88,72,95,82,67,87,73];
+    var rots = [-30,20,35,-15,40,-25,10,-35,25,-18,32,-40,15,-25,22];
 
-    sections.forEach(s => observer.observe(s));
+    for (var i = 0; i < count; i++) {
+        var col = i % cols;
+        var row = Math.floor(i / cols);
+        var idx = (i * 7 + row * 13 + col * 11) % icons.length;
+        var s = sizes[i % 15] / 65 * 42;
+        var r = rots[i % 15];
+        var x = col * cell + cell / 2 - s / 2;
+        var y = row * cell + cell / 2 - s / 2;
+        html += '<span class="sticker-cell" style="font-size:' + s + 'px;' +
+            'left:' + x + 'px;top:' + y + 'px;' +
+            'transform:rotate(' + r + 'deg);">' + icons[idx] + '</span>';
+    }
+    container.innerHTML = html;
 })();
 </script>
 
