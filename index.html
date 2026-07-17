@@ -33,13 +33,14 @@
         .logo {
             display: flex;
             justify-content: center;
-            padding: 36px 24px 0;
+            padding: 44px 24px 0;
             position: relative;
             z-index: 10;
         }
         .logo img {
-            width: 64px; height: 64px;
-            border-radius: 17px;
+            width: 80px; height: 80px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(20,97,235,0.14);
         }
 
         /* ── Stickers layer (full page, bottom → top fade) ── */
@@ -57,7 +58,7 @@
         }
         .sticker-cell {
             position: absolute;
-            opacity: 0.50;
+            opacity: 0.42;
             line-height: 1;
         }
         .stickers-mask {
@@ -68,11 +69,12 @@
             background: linear-gradient(
                 to top,
                 transparent 0%,
-                transparent 5%,
-                rgba(248,249,250,0.10) 30%,
-                rgba(248,249,250,0.45) 45%,
-                rgba(248,249,250,0.85) 55%,
-                var(--bg) 60%,
+                transparent 8%,
+                rgba(248,249,250,0.08) 25%,
+                rgba(248,249,250,0.25) 40%,
+                rgba(248,249,250,0.55) 50%,
+                rgba(248,249,250,0.84) 58%,
+                var(--bg) 65%,
                 var(--bg) 100%
             );
         }
@@ -85,7 +87,7 @@
             display: flex;
             justify-content: center;
             padding: 0 20px;
-            margin-bottom: 32px;
+            margin: 20px 0 32px;
         }
         nav .tabs {
             display: inline-flex;
@@ -230,7 +232,7 @@
 <div class="stickers-mask"></div>
 
 <div class="logo">
-    <img src="icon.png" alt="Plan7" width="64" height="64">
+    <img src="icon.png" alt="Plan7" width="80" height="80">
 </div>
 
 <nav>
@@ -353,16 +355,15 @@
         '🥬','🌽','🫘','🍒','🍌'
     ];
     var container = document.getElementById('stickers');
-    var cell = 40;
+    var cell = 52;
     var sizes = [65,75,85,70,90,80,68,78,88,72,95,82,67,87,73];
     var rots = [-30,20,35,-15,40,-25,10,-35,25,-18,32,-40,15,-25,22];
-    var extraSizes = [80,100,92,78,108,88,72,95,82,110,75,98,85,68,102];
 
     function render() {
         var w = window.innerWidth;
         var h = window.innerHeight;
-        var cols = Math.ceil(w / cell) + 2;
-        var rows = Math.ceil(h / cell) + 2;
+        var cols = Math.ceil(w / cell) + 1;
+        var rows = Math.ceil(h / cell) + 1;
         var count = cols * rows;
         var html = '';
 
@@ -370,11 +371,10 @@
             var col = i % cols;
             var row = Math.floor(i / cols);
             var idx = (i * 7 + row * 13 + col * 11) % icons.length;
-            var base = sizes[i % 15];
-            var s = i % 2 === 0 ? base : extraSizes[i % 15];
+            var s = sizes[i % 15];
             var r = rots[i % 15];
-            var x = col * cell - s / 3;
-            var y = row * cell - s / 3;
+            var x = col * cell + cell / 2 - s / 2;
+            var y = row * cell + cell / 2 - s / 2;
             html += '<span class="sticker-cell" style="font-size:' + s + 'px;' +
                 'left:' + x + 'px;top:' + y + 'px;' +
                 'transform:rotate(' + r + 'deg);">' + icons[idx] + '</span>';
